@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>خدمات تعليمية وأكثر | المنصة الشاملة للخدمات والمنتجات الرقمية</title>
+<meta name="description" content="المنصة السعودية الرائدة لتقديم الخدمات التعليمية، الدورات التخصصية، والمنتجات الرقمية مع تسليم فوري وتكامل مع بوابات الدفع المحلية.">
+
+<!-- Open Graph SEO -->
+<meta property="og:title" content="خدمات تعليمية وأكثر">
+<meta property="og:description" content="دورات، خدمات تعليمية، واشتراكات رقمية بتسليم فوري ودفع آمن عن طريق مدى و Apple Pay.">
+<meta property="og:type" content="website">
+
+<!-- Google Fonts (Cairo) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- FontAwesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Tailwind Configuration -->
+<script>
+tailwind.config = {
+darkMode: 'class',
+theme: {
+extend: {
+colors: {
+brand: {
+purple: '#4C1D95',
+softBg: '#F8FAFC',
+cardBg: '#FFFFFF',
+cyan: '#0284C7',
+gold: '#D97706',
+goldHover: '#B45309'
+}
+},
+fontFamily: {
+cairo: ['Cairo', 'sans-serif']
+}
+}
+}
+}
+</script>
+
+<style>
+body {
+font-family: 'Cairo', sans-serif;
+background: linear-gradient(135deg, #F0F4FF 0%, #E8EEFF 50%, #F5F3FF 100%);
+color: #1E293B;
+min-height: 100vh;
+}
+
+/* Subtle Soft Glassmorphism Styles */
+.glass-panel {
+background: rgba(255, 255, 255, 0.85);
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+border: 1px solid rgba(226, 232, 240, 0.8);
+box-shadow: 0 10px 30px -10px rgba(76, 29, 149, 0.05);
+}
+
+.glass-card {
+background: #FFFFFF;
+border: 1px solid #E2E8F0;
+box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.03);
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+transform: translateY(-4px);
+border-color: #CBD5E1;
+box-shadow: 0 12px 25px -5px rgba(76, 29, 149, 0.08);
+}
+
+.soft-glow {
+box-shadow: 0 0 20px rgba(76, 29, 149, 0.06);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+width: 8px;
+}
+::-webkit-scrollbar-track {
+background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+background: #CBD5E1;
+border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+background: #94A3B8;
+}
+</style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+<!-- ===== Header Section ===== -->
+<header class="sticky top-0 z-40 glass-panel border-b border-slate-200/80">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+
+<!-- Logo -->
+<div class="flex items-center space-x-3 space-x-reverse cursor-pointer" onclick="switchTab('store')">
+<div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-md shadow-indigo-200">
+<i class="fa-solid fa-graduation-cap text-2xl text-amber-300"></i>
+</div>
+<div>
+<span class="text-xl sm:text-2xl font-black text-slate-800">خدمات تعليمية وأكثر</span>
+<span class="block text-xs text-indigo-600 font-bold tracking-wider">EDUCATIONAL & MORE</span>
+</div>
+</div>
+
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center space-x-8 space-x-reverse font-semibold text-sm">
+<button onclick="switchTab('store')" class="text-indigo-700 font-bold hover:text-indigo-900 transition-colors flex items-center gap-2">
+<i class="fa-solid fa-store text-indigo-600"></i> الرئيسية
+</button>
+<button onclick="filterCategory('courses')" class="text-slate-600 hover:text-indigo-600 transition-colors">الدورات التخصصية</button>
+<button onclick="filterCategory('services')" class="text-slate-600 hover:text-indigo-600 transition-colors">الخدمات الاستشارية</button>
+<button onclick="filterCategory('subscriptions')" class="text-slate-600 hover:text-indigo-600 transition-colors">الاشتراكات والمنصات</button>
+<button onclick="filterCategory('files')" class="text-slate-600 hover:text-indigo-600 transition-colors">الملفات التعليمية</button>
+</nav>
+
+<!-- Actions Right -->
+<div class="flex items-center gap-4">
+<!-- Search Trigger -->
+<div class="relative hidden sm:block">
+<input type="text" id="searchInput" oninput="handleSearch()" placeholder="ابحث عن دورة، خدمة..." class="w-48 lg:w-64 bg-slate-100 text-sm rounded-full px-4 py-2 pr-10 border border-slate-200 focus:outline-none focus:border-indigo-500 text-slate-800 placeholder-slate-400 transition-all">
+<i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3 text-slate-400 text-sm"></i>
+</div>
+
+<!-- Admin Button -->
+<button onclick="openAdminLoginModal()" class="px-3 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-bold transition flex items-center gap-1.5">
+<i class="fa-solid fa-user-shield"></i>
+<span>لوحة التحكم</span>
+</button>
+
+<!-- Shopping Cart Button -->
+<button onclick="toggleCartDrawer()" class="relative p-3 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 transition">
+<i class="fa-solid fa-bag-shopping text-lg"></i>
+<span id="cartCountBadge" class="absolute -top-1 -right-1 bg-amber-500 text-white text-xs font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow">0</span>
+</button>
+</div>
+</div>
+</header>
+
+<!-- ===== Main Container ===== -->
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8" id="appMain">
+
+<!-- ================= STORE VIEW ================= -->
+<section id="storeTab">
+
+<!-- Hero Section -->
+<div class="relative rounded-3xl overflow-hidden glass-panel mb-12 border border-indigo-100/80 p-8 sm:p-12 text-center sm:text-right flex flex-col md:flex-row items-center justify-between gap-8 soft-glow">
+<div class="md:w-2/3 space-y-6 z-10">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold">
+<i class="fa-solid fa-graduation-cap"></i> خدمات تعليمية احترافية واستشارات متخصصة
+</div>
+<h1 class="text-3xl sm:text-5xl font-black leading-tight text-slate-900">
+منصتك الشاملة للخدمات التعليمية <span class="bg-gradient-to-l from-indigo-600 to-violet-600 bg-clip-text text-transparent">وأكثر بكثير</span>
+</h1>
+<p class="text-slate-600 text-base sm:text-lg max-w-2xl font-normal leading-relaxed">
+اكتشف الدورات التدريبية المعتمدة، الخدمات الاستشارية الأكاديمية، والمنتجات الرقمية المصممة خصيصاً لتطوير مهاراتك ومستقبلك المهني.
+</p>
+
+<!-- Quick Stats -->
+<div class="grid grid-cols-3 gap-4 pt-4 border-t border-slate-200/80 max-w-lg">
+<div>
+<span class="block text-2xl font-black text-indigo-600">+15,000</span>
+<span class="text-xs text-slate-500 font-semibold">متعلم ومستفيد</span>
+</div>
+<div>
+<span class="block text-2xl font-black text-amber-500">99.8%</span>
+<span class="text-xs text-slate-500 font-semibold">تقييم إيجابي</span>
+</div>
+<div>
+<span class="block text-2xl font-black text-violet-600">24/7</span>
+<span class="text-xs text-slate-500 font-semibold">دعم وتوجيه</span>
+</div>
+</div>
+</div>
+
+<!-- Banner Decorative Element -->
+<div class="md:w-1/3 flex justify-center relative">
+<div class="w-64 h-64 rounded-full bg-indigo-100/60 blur-3xl absolute -z-10"></div>
+<div class="p-6 glass-card rounded-2xl border border-indigo-100 text-center space-y-4 shadow-sm">
+<div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-tr from-amber-400 to-amber-500 flex items-center justify-center text-white font-black text-2xl shadow-md">
+<i class="fa-solid fa-award"></i>
+</div>
+<h3 class="font-bold text-slate-800 text-lg">جودة تعليمية مضمونة</h3>
+<p class="text-xs text-slate-600">جميع الدورات والخدمات التعليمية مقدمة من نخبة الخبراء والمختصين المعتمدين.</p>
+</div>
+</div>
+</div>
+
+<!-- Category Filter Tabs -->
+<div class="flex items-center gap-3 overflow-x-auto pb-4 mb-8 no-scrollbar">
+<button onclick="filterCategory('all')" class="cat-btn active px-6 py-2.5 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 text-sm font-bold whitespace-nowrap transition-all shadow-sm">
+الكل (12)
+</button>
+<button onclick="filterCategory('courses')" class="cat-btn px-6 py-2.5 rounded-xl bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 text-sm font-bold whitespace-nowrap transition-all">
+<i class="fa-solid fa-graduation-cap text-amber-500 ml-1"></i> الدورات التخصصية
+</button>
+<button onclick="filterCategory('services')" class="cat-btn px-6 py-2.5 rounded-xl bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 text-sm font-bold whitespace-nowrap transition-all">
+<i class="fa-solid fa-chalkboard-user text-indigo-500 ml-1"></i> الخدمات الاستشارية
+</button>
+<button onclick="filterCategory('subscriptions')" class="cat-btn px-6 py-2.5 rounded-xl bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 text-sm font-bold whitespace-nowrap transition-all">
+<i class="fa-solid fa-laptop-code text-rose-500 ml-1"></i> اشتراكات المنصات
+</button>
+<button onclick="filterCategory('files')" class="cat-btn px-6 py-2.5 rounded-xl bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 text-sm font-bold whitespace-nowrap transition-all">
+<i class="fa-solid fa-file-lines text-violet-500 ml-1"></i> الملفات والمراجع
+</button>
+</div>
+
+<!-- Products Grid -->
+<div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Dynamic Products Hydrated via JS -->
+</div>
+</section>
+
+<!-- ================= ADMIN DASHBOARD VIEW ================= -->
+<section id="adminTab" class="hidden space-y-8">
+
+<!-- Dashboard Top Bar -->
+<div class="glass-panel p-6 rounded-2xl flex flex-wrap items-center justify-between gap-4 border border-slate-200">
+<div class="flex items-center gap-3">
+<div class="p-3 bg-indigo-100 text-indigo-700 rounded-xl">
+<i class="fa-solid fa-chart-line text-2xl"></i>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-slate-800">لوحة التحكم الإدارية</h2>
+<p class="text-xs text-slate-500">إدارة الخدمات التعليمية، الدورات، الطلبات وتقارير ZATCA</p>
+</div>
+</div>
+
+<!-- RBAC Status & Quick Actions -->
+<div class="flex items-center gap-3">
+<div class="text-right pl-4 border-l border-slate-200">
+<span class="block text-xs text-slate-500">المستخدم الحالي:</span>
+<span id="currentRoleBadge" class="inline-block px-2.5 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-xs">المالك (Owner)</span>
+</div>
+<button onclick="switchTab('store')" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-sm font-semibold text-slate-700 border border-slate-200 transition">
+<i class="fa-solid fa-arrow-right-from-bracket ml-1"></i> العودة للموقع
+</button>
+</div>
+</div>
+
+<!-- Metrics Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="glass-card p-6 rounded-2xl border-r-4 border-r-indigo-600">
+<div class="flex items-center justify-between text-slate-500 mb-2">
+<span class="text-xs font-bold">إجمالي المبيعات (شامل الضريبة)</span>
+<i class="fa-solid fa-sack-dollar text-indigo-600"></i>
+</div>
+<span class="text-3xl font-black text-slate-800">54,800 <span class="text-xs font-normal text-slate-500">ر.س</span></span>
+<span class="block text-xs text-emerald-600 font-bold mt-2"><i class="fa-solid fa-arrow-trend-up"></i> +22.4% هذا الشهر</span>
+</div>
+
+<div class="glass-card p-6 rounded-2xl border-r-4 border-r-amber-500">
+<div class="flex items-center justify-between text-slate-500 mb-2">
+<span class="text-xs font-bold">عدد الطلبات التعليمية</span>
+<i class="fa-solid fa-box-check text-amber-500"></i>
+</div>
+<span class="text-3xl font-black text-slate-800">1,490</span>
+<span class="block text-xs text-emerald-600 font-bold mt-2"><i class="fa-solid fa-check"></i> تفعيل فوري 100%</span>
+</div>
+
+<div class="glass-card p-6 rounded-2xl border-r-4 border-r-violet-500">
+<div class="flex items-center justify-between text-slate-500 mb-2">
+<span class="text-xs font-bold">ضريبة قيمة مضافة (VAT 15%)</span>
+<i class="fa-solid fa-receipt text-violet-500"></i>
+</div>
+<span class="text-3xl font-black text-slate-800">7,147.8 <span class="text-xs font-normal text-slate-500">ر.س</span></span>
+<span class="block text-xs text-slate-500 mt-2">مجهزة للربط مع ZATCA</span>
+</div>
+
+<div class="glass-card p-6 rounded-2xl border-r-4 border-r-emerald-500">
+<div class="flex items-center justify-between text-slate-500 mb-2">
+<span class="text-xs font-bold">المستفيدون عبر المجتمع</span>
+<i class="fa-brands fa-telegram text-emerald-500 text-lg"></i>
+</div>
+<span class="text-3xl font-black text-slate-800">4,210</span>
+<span class="block text-xs text-indigo-600 font-bold mt-2"><i class="fa-solid fa-link"></i> دعوات نشطة</span>
+</div>
+</div>
+
+<!-- Sales Analytics Chart & RBAC Management -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Sales Chart -->
+<div class="lg:col-span-2 glass-panel p-6 rounded-2xl border border-slate-200">
+<h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+<i class="fa-solid fa-chart-area text-indigo-600"></i> تحليل مبيعات الخدمات والبرامج التعليمية
+</h3>
+<div class="h-64">
+<canvas id="salesChart"></canvas>
+</div>
+</div>
+
+<!-- Role Access Control (RBAC) Switcher -->
+<div class="glass-panel p-6 rounded-2xl border border-slate-200 space-y-4">
+<h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+<i class="fa-solid fa-user-gear text-amber-500"></i> إدارة الصلاحيات (RBAC)
+</h3>
+<p class="text-xs text-slate-600 leading-relaxed">اختر دور العرض لاختبار تقييد الواجهة والإجراءات المسموحة بناءً على الصلاحيات:</p>
+
+<div class="space-y-3">
+<label class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:border-indigo-300 transition">
+<div class="flex items-center gap-3">
+<input type="radio" name="rbacRole" value="owner" checked onchange="setRole('owner')" class="text-indigo-600 focus:ring-0">
+<div>
+<span class="block text-sm font-bold text-slate-800">مالك المنصة (Owner)</span>
+<span class="text-xs text-slate-500">صلاحيات كاملة شاملة الإعدادات والتعديل</span>
+</div>
+</div>
+</label>
+
+<label class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:border-indigo-300 transition">
+<div class="flex items-center gap-3">
+<input type="radio" name="rbacRole" value="maintenance" onchange="setRole('maintenance')" class="text-indigo-600 focus:ring-0">
+<div>
+<span class="block text-sm font-bold text-slate-800">فريق الصيانة (Maintenance)</span>
+<span class="text-xs text-slate-500">إدارة الخدمات والأسعار والطلبات فقط</span>
+</div>
+</div>
+</label>
+
+<label class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:border-indigo-300 transition">
+<div class="flex items-center gap-3">
+<input type="radio" name="rbacRole" value="support" onchange="setRole('support')" class="text-indigo-600 focus:ring-0">
+<div>
+<span class="block text-sm font-bold text-slate-800">الدعم الفني (Support)</span>
+<span class="text-xs text-slate-500">قراءة الطلبات وإعادة إرسال روابط الورش</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+</div>
+
+<!-- Admin Settings & Integrations Tabs -->
+<div class="glass-panel p-6 rounded-2xl border border-slate-200 space-y-6">
+<div class="border-b border-slate-200 pb-4 flex items-center justify-between">
+<h3 class="text-xl font-bold text-slate-800">إعدادات الربط والمنصات السعودية</h3>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Saudi Aamal Integration Config -->
+<div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
+<div class="flex items-center justify-between">
+<h4 class="font-bold text-indigo-700 flex items-center gap-2">
+<i class="fa-solid fa-building-columns"></i> منصة أعمال (Aamal Saudi)
+</h4>
+<span class="px-2 py-0.5 rounded text-xs bg-emerald-100 text-emerald-800 font-semibold">متصل</span>
+</div>
+<p class="text-xs text-slate-500">تكامل مع كود النشاط التجاري وتوثيق الفواتير الرقمية.</p>
+
+<div class="space-y-3 text-xs">
+<div>
+<label class="block text-slate-700 font-semibold mb-1">Merchant ID (معرف التاجر)</label>
+<input type="text" value="AAMAL-EDU-5521409" class="rbac-owner w-full p-2.5 rounded-lg bg-white border border-slate-300 text-slate-800 focus:outline-none focus:border-indigo-500">
+</div>
+<div>
+<label class="block text-slate-700 font-semibold mb-1">Production API Key</label>
+<input type="password" value="sk_edu_live_9983411002384" class="rbac-owner w-full p-2.5 rounded-lg bg-white border border-slate-300 text-slate-800 focus:outline-none focus:border-indigo-500">
+</div>
+</div>
+<button onclick="saveSettings('Aamal')" class="rbac-owner w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-xs transition shadow-sm">
+حفظ إعدادات منصة أعمال
+</button>
+</div>
+
+<!-- Telegram Bot Integration Config -->
+<div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
+<div class="flex items-center justify-between">
+<h4 class="font-bold text-indigo-700 flex items-center gap-2">
+<i class="fa-brands fa-telegram text-indigo-600"></i> مجتمع الورش والاتصال
+</h4>
+<span class="px-2 py-0.5 rounded text-xs bg-emerald-100 text-emerald-800 font-semibold">توليد تلقائي نشط</span>
+</div>
+<p class="text-xs text-slate-500">إرسال روابط دعوة الورش والمجموعات التخصصية فور الشراء.</p>
+
+<div class="space-y-3 text-xs">
+<div>
+<label class="block text-slate-700 font-semibold mb-1">Bot Token</label>
+<input type="password" value="6123490812:EDU_Bot_Token_Secure" class="rbac-owner w-full p-2.5 rounded-lg bg-white border border-slate-300 text-slate-800 focus:outline-none focus:border-indigo-500">
+</div>
+<div>
+<label class="block text-slate-700 font-semibold mb-1">Channel / Group ID</label>
+<input type="text" value="-100189230554" class="rbac-owner w-full p-2.5 rounded-lg bg-white border border-slate-300 text-slate-800 focus:outline-none focus:border-indigo-500">
+</div>
+</div>
+<button onclick="saveSettings('Telegram')" class="rbac-owner w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-xs transition shadow-sm">
+اختبار الربط وحفظ البيانات
+</button>
+</div>
+</div>
+</div>
+
+<!-- Audit Log Component -->
+<div class="glass-panel p-6 rounded-2xl border border-slate-200">
+<h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+<i class="fa-solid fa-list-check text-amber-500"></i> سجل العمليات والحماية (Audit Logs)
+</h3>
+<div class="overflow-x-auto">
+<table class="w-full text-right text-xs text-slate-700">
+<thead class="bg-slate-100 text-slate-800 border-b border-slate-200 font-bold">
+<tr>
+<th class="p-3">التاريخ والوقت</th>
+<th class="p-3">المستخدم</th>
+<th class="p-3">الحدث / العملية</th>
+<th class="p-3">عنوان IP</th>
+<th class="p-3">الحالة</th>
+</tr>
+</thead>
+<tbody id="auditLogTable" class="divide-y divide-slate-200">
+<!-- Populated via JS -->
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+</main>
+
+<!-- ===== Cart Drawer (Slide-in) ===== -->
+<div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden pointer-events-none transition-all duration-300 opacity-0">
+<div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="toggleCartDrawer()"></div>
+<div class="fixed inset-y-0 left-0 max-w-full flex">
+<div class="w-screen max-w-md glass-panel border-r border-slate-200 p-6 flex flex-col justify-between pointer-events-auto transition-transform translate-x-full duration-300" id="cartContent">
+
+<!-- Drawer Header -->
+<div>
+<div class="flex items-center justify-between border-b border-slate-200 pb-4">
+<h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+<i class="fa-solid fa-bag-shopping text-indigo-600"></i> سلة الخدمات والدورات
+</h2>
+<button onclick="toggleCartDrawer()" class="p-2 text-slate-400 hover:text-slate-600">
+<i class="fa-solid fa-xmark text-lg"></i>
+</button>
+</div>
+
+<!-- Cart Items Container -->
+<div id="cartItemsList" class="mt-6 space-y-4 max-h-[55vh] overflow-y-auto pr-1">
+<!-- Dynamic Items Rendered Here -->
+</div>
+</div>
+
+<!-- Drawer Footer & Pricing Breakdown -->
+<div class="border-t border-slate-200 pt-4 space-y-4">
+<div class="space-y-1.5 text-sm">
+<div class="flex justify-between text-slate-600">
+<span>المجموع الفرعي:</span>
+<span id="cartSubtotal font-semibold">0.00 ر.س</span>
+</div>
+<div class="flex justify-between text-slate-600">
+<span>ضريبة القيمة المضافة (15%):</span>
+<span id="cartVat">0.00 ر.س</span>
+</div>
+<div class="flex justify-between text-slate-900 font-extrabold text-lg border-t border-slate-200 pt-2">
+<span>الإجمالي الكلي:</span>
+<span id="cartTotal" class="text-indigo-600">0.00 ر.س</span>
+</div>
+</div>
+
+<button onclick="openCheckoutModal()" class="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-black text-center shadow-md transition flex items-center justify-center gap-2">
+<span>إتمام الطلب والدفع الآمن</span>
+<i class="fa-solid fa-arrow-left"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== Checkout & Payment Modal ===== -->
+<div id="checkoutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md">
+<div class="glass-panel w-full max-w-2xl rounded-3xl p-6 sm:p-8 border border-slate-200 max-h-[90vh] overflow-y-auto">
+
+<div class="flex items-center justify-between border-b border-slate-200 pb-4 mb-6">
+<h3 class="text-2xl font-black text-slate-800 flex items-center gap-2">
+<i class="fa-solid fa-lock text-emerald-600"></i> بوابة الدفع الموحدة
+</h3>
+<button onclick="closeCheckoutModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+</div>
+
+<div class="space-y-6">
+<!-- Customer Information -->
+<div class="space-y-3">
+<h4 class="text-sm font-bold text-indigo-700">1. بيانات التواصل والتسجيل</h4>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<input type="text" id="custName" placeholder="الاسم الكامل" class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:border-indigo-500 focus:outline-none">
+<input type="email" id="custEmail" placeholder="البريد الإلكتروني (لتسلم تفاصيل الورش)" class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:border-indigo-500 focus:outline-none">
+</div>
+</div>
+
+<!-- Payment Gateways Selection -->
+<div class="space-y-3">
+<h4 class="text-sm font-bold text-indigo-700">2. اختر طريقة الدفع (محاكاة)</h4>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+
+<button type="button" onclick="selectGateway('mada')" class="gw-btn p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-500 flex flex-col items-center justify-center gap-2 text-xs font-bold text-slate-800 transition">
+<i class="fa-solid fa-credit-card text-2xl text-emerald-600"></i>
+<span>مدى (Mada)</span>
+</button>
+
+<button type="button" onclick="selectGateway('applepay')" class="gw-btn p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-500 flex flex-col items-center justify-center gap-2 text-xs font-bold text-slate-800 transition">
+<i class="fa-brands fa-apple text-2xl text-slate-900"></i>
+<span>Apple Pay</span>
+</button>
+
+<button type="button" onclick="selectGateway('stcpay')" class="gw-btn p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-500 flex flex-col items-center justify-center gap-2 text-xs font-bold text-slate-800 transition">
+<i class="fa-solid fa-mobile-screen-button text-2xl text-purple-600"></i>
+<span>STC Pay</span>
+</button>
+
+<button type="button" onclick="selectGateway('card')" class="gw-btn p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-500 flex flex-col items-center justify-center gap-2 text-xs font-bold text-slate-800 transition">
+<i class="fa-brands fa-cc-visa text-2xl text-blue-600"></i>
+<span>فيزا / ماستركارد</span>
+</button>
+
+<button type="button" onclick="selectGateway('sadad')" class="gw-btn p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-500 flex flex-col items-center justify-center gap-2 text-xs font-bold text-slate-800 transition">
+<i class="fa-solid fa-building-columns text-2xl text-amber-500"></i>
+<span>سداد (Sadad)</span>
+</button>
+</div>
+</div>
+
+<!-- Payment Form Mock -->
+<div id="paymentFields" class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+<p class="text-xs text-slate-500">أدخل أي بيانات تجريبية لإكمال عملية التسجيل ومحاكاة الفاتورة والتسليم الآلي:</p>
+<input type="text" placeholder="رقم البطاقة: 4000 0000 0000 0000" class="w-full p-2.5 rounded-lg bg-white border border-slate-300 text-xs text-slate-800">
+<div class="grid grid-cols-2 gap-2">
+<input type="text" placeholder="MM/YY" class="p-2.5 rounded-lg bg-white border border-slate-300 text-xs text-slate-800">
+<input type="password" placeholder="CVV" class="p-2.5 rounded-lg bg-white border border-slate-300 text-xs text-slate-800">
+</div>
+</div>
+
+<!-- Complete Payment Action -->
+<button onclick="processPayment()" id="paySubmitBtn" class="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-lg transition shadow-md flex items-center justify-center gap-2">
+<i class="fa-solid fa-check-circle"></i>
+<span>تأكيد ودفع المبلغ الآن</span>
+</button>
+</div>
+</div>
+</div>
+
+<!-- ===== Invoice & Delivery Success Modal (ZATCA Compliant) ===== -->
+<div id="invoiceModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
+<div class="glass-panel w-full max-w-xl rounded-3xl p-6 sm:p-8 border border-emerald-300 space-y-6 max-h-[90vh] overflow-y-auto">
+
+<div class="text-center space-y-2">
+<div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl">
+<i class="fa-solid fa-circle-check"></i>
+</div>
+<h3 class="text-2xl font-black text-slate-800">تم التسجيل وعملية الشراء بنجاح!</h3>
+<p class="text-xs text-slate-500">تم إصدار الفاتورة الإلكترونية وتفعيل وصولك التعليمي تلقائياً</p>
+</div>
+
+<!-- ZATCA Standard Electronic Invoice -->
+<div class="p-5 rounded-2xl bg-white text-slate-800 space-y-4 font-mono text-xs border border-slate-200 shadow-sm">
+<div class="flex justify-between items-center border-b border-slate-200 pb-3">
+<div>
+<h4 class="font-bold text-sm text-indigo-900">فاتورة ضريبية مبسطة - خدمات تعليمية وأكثر</h4>
+<span class="text-[10px] text-slate-500">Simplicated Tax Invoice</span>
+</div>
+<span class="text-right text-[10px] text-slate-500">الرقم الضريبي: 310982301900003</span>
+</div>
+
+<div class="space-y-1">
+<p><strong>رقم الفاتورة:</strong> <span id="invNumber">#INV-89231</span></p>
+<p><strong>التاريخ:</strong> <span id="invDate">2026-09-28 19:12</span></p>
+<p><strong>المستفيد:</strong> <span id="invCustomer">عميل المنصة</span></p>
+</div>
+
+<!-- Line Items -->
+<table class="w-full text-right border-t border-b border-slate-200 py-2">
+<thead>
+<tr class="text-[10px] text-slate-500">
+<th>الخدمة / الدورة</th>
+<th>المبلغ</th>
+</tr>
+</thead>
+<tbody id="invItems">
+<!-- Populated Dynamic -->
+</tbody>
+</table>
+
+<div class="flex justify-between items-center pt-2 font-bold text-sm">
+<span>الإجمالي (شامل 15% VAT):</span>
+<span id="invTotalAmount" class="text-indigo-700">0.00 ر.س</span>
+</div>
+
+<!-- QR Code Simulation (ZATCA) -->
+<div class="flex items-center justify-between pt-3 border-t border-slate-200">
+<div class="text-[9px] text-slate-500 max-w-[180px]">
+معتمد من هيئة الزكاة والضريبة والجمارك (ZATCA Phase 2).
+</div>
+<div class="w-16 h-16 bg-slate-100 rounded flex items-center justify-center p-1 border border-slate-200">
+<i class="fa-solid fa-qrcode text-4xl text-slate-800"></i>
+</div>
+</div>
+</div>
+
+<!-- Instant Delivery Links Section -->
+<div class="p-4 rounded-2xl bg-indigo-50 border border-indigo-200 space-y-3">
+<h4 class="text-sm font-bold text-indigo-800 flex items-center gap-2">
+<i class="fa-solid fa-key"></i> بيانات الوصول والخدمات التعليمية
+</h4>
+
+<div id="deliveryContainer" class="space-y-2 text-xs">
+<!-- Populated JS Download / Telegram Links -->
+</div>
+</div>
+
+<button onclick="closeInvoiceModal()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-sm transition shadow-sm">
+إغلاق والعودة للرئيسية
+</button>
+</div>
+</div>
+
+<!-- ===== Quick Admin Access / Auth Modal ===== -->
+<div id="adminAuthModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md">
+<div class="glass-panel w-full max-w-md rounded-3xl p-6 border border-slate-200 space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+<i class="fa-solid fa-user-shield text-indigo-600"></i> تسجيل دخول لوحة التحكم
+</h3>
+<button onclick="closeAdminLoginModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
+</div>
+
+<div class="space-y-4">
+<div>
+<label class="block text-xs text-slate-600 font-bold mb-1">البريد الإلكتروني</label>
+<input type="email" id="adminEmail" value="owner@edu-more.sa" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:border-indigo-500 focus:outline-none">
+</div>
+<div>
+<label class="block text-xs text-slate-600 font-bold mb-1">كلمة المرور</label>
+<input type="password" id="adminPass" value="••••••••" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:border-indigo-500 focus:outline-none">
+</div>
+
+<!-- Rate Limiting Indicator -->
+<p id="rateLimitNotice" class="text-[11px] text-slate-500">محاولات الدخول المتبقية: <span id="attemptsLeft" class="text-amber-600 font-bold">5</span> من 5</p>
+
+<button onclick="authenticateAdmin()" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm transition shadow-sm">
+تسجيل الدخول
+</button>
+
+<div class="relative flex py-2 items-center">
+<div class="flex-grow border-t border-slate-200"></div>
+<span class="flex-shrink mx-4 text-xs text-slate-400">أو عبر الدخول السريع</span>
+<div class="flex-grow border-t border-slate-200"></div>
+</div>
+
+<!-- Quick Access via PIN / Biometrics -->
+<button onclick="quickOwnerLogin()" class="w-full py-3 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-800 font-bold text-xs transition flex items-center justify-center gap-2">
+<i class="fa-solid fa-fingerprint text-lg"></i>
+<span>دخول سريع للمالك (PIN / WebAuthn)</span>
+</button>
+</div>
+</div>
+</div>
+
+<!-- ===== Footer Section ===== -->
+<footer class="mt-auto border-t border-slate-200 glass-panel py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="text-center md:text-right">
+<span class="text-lg font-bold text-slate-800">منصة خدمات تعليمية وأكثر</span>
+<p class="text-xs text-slate-500 mt-1">جميع الحقوق محفوظة © 2026 - موثق لدى منصة الأعمال السعودية.</p>
+</div>
+
+<!-- Payment Icons Logos -->
+<div class="flex items-center gap-4 text-2xl text-slate-400">
+<i class="fa-brands fa-cc-visa hover:text-slate-600 transition"></i>
+<i class="fa-brands fa-cc-mastercard hover:text-slate-600 transition"></i>
+<i class="fa-brands fa-apple hover:text-slate-600 transition"></i>
+<i class="fa-solid fa-credit-card hover:text-emerald-600 transition" title="Mada"></i>
+</div>
+</div>
+</footer>
+
+<!-- ===== JavaScript Application Logic ===== -->
+<script>
+/* ==========================================================================
+1. Global App State & Mock Database
+========================================================================== */
+const AppState = {
+products: [
+{ id: 1, name: 'دورة البرمجة الشاملة Full-Stack Web', category: 'courses', price: 390, icon: 'fa-graduation-cap text-indigo-600', badge: 'الأكثر طلباً', desc: 'أكثر من 40 ساعة تعليمية عملية لبناء وتطوير المواقع والمنصات الرقمية.' },
+{ id: 2, name: 'استشارة أكاديمية فردية (60 دقيقة)', category: 'services', price: 150, icon: 'fa-chalkboard-user text-indigo-600', badge: 'حجز مباشر', desc: 'جلسة استشارية وتوجيه مهني مع نخبة الخبراء والمختصين.' },
+{ id: 3, name: 'اشتراك منصة ChatGPT Plus التعليمية', category: 'subscriptions', price: 75, icon: 'fa-robot text-emerald-600', badge: 'تفعيل فوري', desc: 'وصول كامل لـ GPT-4o والدوال المتقدمة مع ضمان الاستمرارية.' },
+{ id: 4, name: 'دليل مهارات المستقبل والذكاء الاصطناعي', category: 'files', price: 65, icon: 'fa-file-lines text-violet-600', badge: 'تحميل مباشر', desc: 'كتاب ومراجع شاملة لتطبيق الذكاء الاصطناعي في التعليم والبحث.' },
+{ id: 5, name: 'دورة الأمن السيبراني وأساسيات الحماية', category: 'courses', price: 450, icon: 'fa-user-ninja text-rose-600', badge: 'معتمد', desc: 'تطبيقات عملية على ثغرات الويب وحماية الأنظمة والبيانات.' },
+{ id: 6, name: 'خدمة مراجعة وتدقيق الأبحاث الأكاديمية', category: 'services', price: 220, icon: 'fa-book-open text-blue-600', badge: 'تدقيق لغوي', desc: 'تدقيق لغوي وتنسيق وفق معايير APA للأبحاث وأوراق العمل.' },
+{ id: 7, name: 'اشتراك مكتبة الدورات الاحترافية (3 أشهر)', category: 'subscriptions', price: 180, icon: 'fa-tv text-amber-500', badge: 'عرض خاص', desc: 'وصول غير محدود لأرشيف الضخامة التعليمية وورش العمل المسجلة.' },
+{ id: 8, name: 'دعوة مجتمع التوجيه المهني والتطوير (Telegram)', category: 'subscriptions', price: 120, icon: 'fa-paper-plane text-indigo-600', badge: 'مجتمع حصري', desc: 'رابط دعوة مؤمن لمجموعة النقاشات والموارد التعليمية المتجددة.' },
+{ id: 9, name: 'دورة تصميم واجهات المستخدم UI/UX (Figma)', category: 'courses', price: 320, icon: 'fa-palette text-pink-600', badge: 'تطبيق عملي', desc: 'تعلم التصميم الاحترافي وتجربة المستخدم من الصفر حتى الاحتراف.' },
+{ id: 10, name: 'حزمة قوالب الخطط الدراسية والبحوث', category: 'files', price: 95, icon: 'fa-file-code text-indigo-600', badge: 'جاهز للاستخدام', desc: 'نماذج وقوالب جاهزة ومخصصة لتنظيم المحتوى التعليمي والدروس.' },
+{ id: 11, name: 'استشارة تأسيس الأنشطة التعليمية الرقمية', category: 'services', price: 300, icon: 'fa-building-columns text-amber-500', badge: 'استشارة VIP', desc: 'دعم استراتيجي لتأسيس وإطلاق منصتك التعليمية الخاصة بنجاح.' },
+{ id: 12, name: 'ورشة عمل التسويق للخدمات التعليمية', category: 'courses', price: 210, icon: 'fa-bullhorn text-emerald-600', badge: 'مباشر مسجل', desc: 'استراتيجيات استقطاب الطلاب والمهتمين بالدورات والخدمات.' }
+ ],
+cart: [],
+currentRole: 'owner', // owner | maintenance | support
+selectedGateway: 'mada',
+authAttempts: 5,
+auditLogs: [
+{ timestamp: '2026-09-28 19:00', user: 'System', action: 'تشغيل منصة خدمات تعليمية وأكثر وتفعيل الحماية', ip: '127.0.0.1', status: 'نجاح' },
+{ timestamp: '2026-09-28 19:05', user: 'Owner', action: 'تحديث إعدادات ربط منصة أعمال Aamal', ip: '185.120.44.2', status: 'نجاح' }
+ ]
+};
+
+/* ==========================================================================
+2. Core UI & Tab Switcher Functions
+========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+renderProducts(AppState.products);
+renderAuditLogs();
+initChart();
+});
+
+function switchTab(tab) {
+if (tab === 'store') {
+document.getElementById('storeTab').classList.remove('hidden');
+document.getElementById('adminTab').classList.add('hidden');
+} else if (tab === 'admin') {
+document.getElementById('storeTab').classList.add('hidden');
+document.getElementById('adminTab').classList.remove('hidden');
+}
+}
+
+/* ==========================================================================
+3. Product Catalog & Filter Logic
+========================================================================== */
+function renderProducts(items) {
+const container = document.getElementById('productsGrid');
+container.innerHTML = '';
+
+items.forEach(product => {
+const card = document.createElement('div');
+card.className = 'glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4 relative overflow-hidden';
+
+card.innerHTML = ${product.badge ? <span class="absolute top-3 left-3 bg-amber-100 text-amber-800 font-extrabold text-[10px] px-2.5 py-1 rounded-full border border-amber-200"&gt;${product.badge}</span>` : ''}
+
+<div class="space-y-3">
+<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl border border-slate-200">
+<i class="fa-solid {product.name}</h3>
+<p class="text-xs text-slate-600 leading-relaxed">$`{product.desc}</p>
+</div>
+
+<div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+<div>
+<span class="block text-xs text-slate-400">السعر</span>
+<span class="text-xl font-black text-indigo-700">`${product.price} <span class="text-xs font-normal text-slate-500">ر.س</span></span>
+</div>
+
+<div class="flex items-center gap-2">
+<button onclick="addToCart({product.id})" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition shadow-sm">
+احجز الآن
+</button>
+</div>
+</div>
+`;
+container.appendChild(card);
+});
+}
+
+function filterCategory(cat) {
+document.querySelectorAll('.cat-btn').forEach(btn => {
+btn.classList.remove('bg-indigo-600', 'text-white');
+btn.classList.add('bg-white', 'text-slate-700');
+});
+event.currentTarget.classList.remove('bg-white', 'text-slate-700');
+event.currentTarget.classList.add('bg-indigo-600', 'text-white');
+
+if (cat === 'all') {
+renderProducts(AppState.products);
+} else {
+const filtered = AppState.products.filter(p => p.category === cat);
+renderProducts(filtered);
+}
+}
+
+function handleSearch() {
+const query = document.getElementById('searchInput').value.toLowerCase();
+const filtered = AppState.products.filter(p => p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
+renderProducts(filtered);
+}
+
+/* ==========================================================================
+4. Shopping Cart Drawer Logic
+========================================================================== */
+function toggleCartDrawer() {
+const drawer = document.getElementById('cartDrawer');
+const content = document.getElementById('cartContent');
+if (drawer.classList.contains('opacity-0')) {
+drawer.classList.remove('opacity-0', 'pointer-events-none');
+content.classList.remove('translate-x-full');
+} else {
+drawer.classList.add('opacity-0', 'pointer-events-none');
+content.classList.add('translate-x-full');
+}
+}
+
+function addToCart(productId) {
+const product = AppState.products.find(p => p.id === productId);
+const existing = AppState.cart.find(item => item.id === productId);
+
+if (existing) {
+existing.qty++;
+} else {
+AppState.cart.push({ ...product, qty: 1 });
+}
+
+updateCartUI();
+toggleCartDrawer();
+}
+
+function directBuy(productId) {
+addToCart(productId);
+openCheckoutModal();
+}
+
+function updateCartUI() {
+const list = document.getElementById('cartItemsList');
+const countBadge = document.getElementById('cartCountBadge');
+list.innerHTML = '';
+
+let totalQty = 0;
+let subtotal = 0;
+
+AppState.cart.forEach(item => {
+totalQty += item.qty;
+subtotal += item.price * item.qty;
+
+const itemRow = document.createElement('div');
+itemRow.className = 'p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3';
+itemRow.innerHTML = &lt;div class="flex items-center gap-3"&gt; &lt;div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-indigo-600 border border-slate-200"&gt; &lt;i class="fa-solid ${item.icon}"></i>
+</div>
+<div>
+<span class="block text-xs font-bold text-slate-800">${item.name}&lt;/span&gt; &lt;span class="text-xs text-indigo-600 font-bold"&gt;${item.price} ر.س</span>
+</div>
+</div>
+
+<div class="flex items-center gap-2">
+<button onclick="changeQty(${item.id}, -1)" class="w-6 h-6 rounded bg-slate-200 text-slate-700 font-bold text-xs"&gt;-&lt;/button&gt; &lt;span class="text-xs text-slate-800 font-bold"&gt;${item.qty}</span>
+<button onclick="changeQty(${item.id}, 1)" class="w-6 h-6 rounded bg-slate-200 text-slate-700 font-bold text-xs"&gt;+&lt;/button&gt; &lt;/div&gt;;
+list.appendChild(itemRow);
+});
+
+const vat = subtotal * 0.15;
+const total = subtotal + vat;
+
+countBadge.innerText = totalQty;
+document.getElementById('cartSubtotal font-semibold').innerText = subtotal.toFixed(2) + ' ر.س';
+document.getElementById('cartVat').innerText = vat.toFixed(2) + ' ر.س';
+document.getElementById('cartTotal').innerText = total.toFixed(2) + ' ر.س';
+}
+
+function changeQty(id, delta) {
+const item = AppState.cart.find(i => i.id === id);
+if (item) {
+item.qty += delta;
+if (item.qty <= 0) {
+AppState.cart = AppState.cart.filter(i => i.id !== id);
+}
+}
+updateCartUI();
+}
+
+/* ==========================================================================
+5. Payment & Checkout Simulation (Mada / ZATCA / Telegram)
+========================================================================== */
+function openCheckoutModal() {
+if (AppState.cart.length === 0) {
+alert('سلة الخدمات فارغة حالياً!');
+return;
+}
+document.getElementById('checkoutModal').classList.remove('hidden');
+}
+
+function closeCheckoutModal() {
+document.getElementById('checkoutModal').classList.add('hidden');
+}
+
+function selectGateway(gw) {
+AppState.selectedGateway = gw;
+document.querySelectorAll('.gw-btn').forEach(btn => btn.classList.remove('border-indigo-600', 'bg-indigo-50'));
+event.currentTarget.classList.add('border-indigo-600', 'bg-indigo-50');
+}
+
+function processPayment() {
+const btn = document.getElementById('paySubmitBtn');
+const custName = document.getElementById('custName').value || 'عميل المنصة';
+
+btn.innerHTML = <i class="fa-solid fa-spinner fa-spin"&gt;&lt;/i&gt; جاري الاتصال ببوابة الدفع (${AppState.selectedGateway.toUpperCase()})...`;
+btn.disabled = true;
+
+setTimeout(() => {
+btn.innerHTML = <i class="fa-solid fa-check-circle"&gt;&lt;/i&gt; تمت عملية التسجيل بنجاح!;
+btn.disabled = false;
+
+closeCheckoutModal();
+showInvoice(custName);
+
+// Reset Cart
+AppState.cart = [];
+updateCartUI();
+toggleCartDrawer();
+
+logAudit('Customer', عملية شراء ناجحة عبر gateway (${AppState.selectedGateway})`, 'نجاح');
+}, 1800);
+}
+
+function showInvoice(customerName) {
+const modal = document.getElementById('invoiceModal');
+document.getElementById('invNumber').innerText = '#EDU-' + Math.floor(100000 + Math.random() * 900000);
+document.getElementById('invDate').innerText = new Date().toISOString().replace('T', ' ').substring(0, 16);
+document.getElementById('invCustomer').innerText = customerName;
+
+const itemsContainer = document.getElementById('invItems');
+itemsContainer.innerHTML = '';
+
+let total = 0;
+const deliveryContainer = document.getElementById('deliveryContainer');
+deliveryContainer.innerHTML = '';
+
+AppState.cart.forEach(item => {
+const itemTotal = item.price * item.qty;
+total += itemTotal;
+
+itemsContainer.innerHTML += &lt;tr&gt; &lt;td class="py-1"&gt;${item.name} (${item.qty})&lt;/td&gt; &lt;td class="py-1 text-left"&gt;${itemTotal.toFixed(2)} ر.س</td>
+</tr>
+`;
+
+// Render Digital Delivery Mechanism
+if (item.category === 'subscriptions' || item.name.includes('Telegram') || item.category === 'courses') {
+deliveryContainer.innerHTML += &lt;div class="p-2.5 rounded bg-white border border-indigo-200 flex items-center justify-between"&gt; &lt;span&gt;&lt;i class="fa-solid fa-graduation-cap text-indigo-600"&gt;&lt;/i&gt; رابط الوصول للدورة / المجتمع:${item.name}</span>
+<a href="https://t.me/+mock_edu_latex
+{Math.random().toString(36).substring(7)}" target="_blank" class="px-2.5 py-1 bg-indigo-600 text-white font-bold rounded text-[11px]"&gt;بدء التعلم&lt;/a&gt; &lt;/div&gt; `; } else { deliveryContainer.innerHTML += ` &lt;div class="p-2.5 rounded bg-white border border-indigo-200 flex items-center justify-between"&gt; &lt;span&gt;&lt;i class="fa-solid fa-download text-amber-500"&gt;&lt;/i&gt; تحميل 
+
+{item.name} (صالح لـ 24 ساعة)</span>
+<a href="#" onclick="alert('جاري بدء تحميل الملف التعليمي المشفر...'); return false;" class="px-2.5 py-1 bg-amber-500 text-white font-bold rounded text-[11px]">تحميل الملف</a>
+</div>
+`;
+}
+});
+
+document.getElementById('invTotalAmount').innerText = (total * 1.15).toFixed(2) + ' ر.س';
+modal.classList.remove('hidden');
+}
+
+function closeInvoiceModal() {
+document.getElementById('invoiceModal').classList.add('hidden');
+}
+
+/* ==========================================================================
+6. Authentication & RBAC Administration Logic
+========================================================================== */
+function openAdminLoginModal() {
+document.getElementById('adminAuthModal').classList.remove('hidden');
+}
+
+function closeAdminLoginModal() {
+document.getElementById('adminAuthModal').classList.add('hidden');
+}
+
+function authenticateAdmin() {
+if (AppState.authAttempts <= 1) {
+alert('تجاوزت الحد المسموح من المحاولات (Rate Limiting Activated). يرجى الانتظار 5 دقائق.');
+logAudit('Unknown', 'تجاوز حد محاولات تسجيل الدخول - تم الحظر المؤقت', 'حظر');
+return;
+}
+
+AppState.authAttempts--;
+document.getElementById('attemptsLeft').innerText = AppState.authAttempts;
+
+const email = document.getElementById('adminEmail').value;
+if (email === 'owner@edu-more.sa') {
+closeAdminLoginModal();
+switchTab('admin');
+logAudit('Owner', 'تسجيل دخول ناجح للوحة التحكم', 'نجاح');
+} else {
+alert('بيانات الدخول غير صحيحة!');
+logAudit('Unknown', محاولة دخول فاشلة بالبريد: ${email}`, 'فشل');
+}
+}
+
+function quickOwnerLogin() {
+// Simulated WebAuthn / Biometric PIN Quick Access
+closeAdminLoginModal();
+switchTab('admin');
+logAudit('Owner', 'دخول سريع للمالك عبر المصادقة الحيوية (WebAuthn)', 'نجاح');
+}
+
+function setRole(role) {
+AppState.currentRole = role;
+const badge = document.getElementById('currentRoleBadge');
+
+if (role === 'owner') {
+badge.className = 'inline-block px-2.5 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-xs';
+badge.innerText = 'المالك (Owner)';
+toggleOwnerFields(false);
+} else if (role === 'maintenance') {
+badge.className = 'inline-block px-2.5 py-0.5 rounded bg-blue-100 text-blue-800 font-bold text-xs';
+badge.innerText = 'الصيانة (Maintenance)';
+toggleOwnerFields(true);
+} else {
+badge.className = 'inline-block px-2.5 py-0.5 rounded bg-purple-100 text-purple-800 font-bold text-xs';
+badge.innerText = 'الدعم الفني (Support)';
+toggleOwnerFields(true);
+}
+
+logAudit('Admin', تغيير صلاحية الواجهة إلى:${role}`, 'نجاح');
+}
+
+function toggleOwnerFields(disabled) {
+document.querySelectorAll('.rbac-owner').forEach(el => {
+el.disabled = disabled;
+if (disabled) el.classList.add('opacity-50', 'cursor-not-allowed');
+else el.classList.remove('opacity-50', 'cursor-not-allowed');
+});
+}
+
+function saveSettings(type) {
+if (AppState.currentRole !== 'owner') {
+alert('عذراً! لا تملك صلاحية تعديل الإعدادات الحساسة.');
+return;
+}
+alert(تم حفظ إعدادات ${type} وتحديث المفاتيح المشفرة بنجاح!); logAudit('Owner',تحديث إعدادات ربط ${type}, 'نجاح');
+}
+
+/* ==========================================================================
+7. Audit Logging & Analytics Charts
+========================================================================== */
+function logAudit(user, action, status) {
+const time = new Date().toISOString().replace('T', ' ').substring(0, 16);
+AppState.auditLogs.unshift({ timestamp: time, user, action, ip: '185.120.44.2', status });
+renderAuditLogs();
+}
+
+function renderAuditLogs() {
+const table = document.getElementById('auditLogTable');
+table.innerHTML = '';
+
+AppState.auditLogs.slice(0, 5).forEach(log => {
+const tr = document.createElement('tr');
+tr.innerHTML = &lt;td class="p-3"&gt;${log.timestamp}</td>
+<td class="p-3 font-bold text-slate-800">${log.user}&lt;/td&gt; &lt;td class="p-3"&gt;${log.action}</td>
+<td class="p-3 font-mono text-slate-500">${log.ip}&lt;/td&gt; &lt;td class="p-3"&gt;&lt;span class="px-2 py-0.5 rounded text-[10px] ${log.status === 'نجاح' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'} font-bold">${log.status}&lt;/span&gt;&lt;/td&gt;;
+table.appendChild(tr);
+});
+}
+
+function initChart() {
+const ctx = document.getElementById('salesChart').getContext('2d');
+new Chart(ctx, {
+type: 'line',
+data: {
+labels: ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'],
+datasets: [{
+label: 'المبيعات اليومية (ر.س)',
+data: [4800, 6200, 7900, 7100, 9500, 12400, 10300],
+borderColor: '#4F46E5',
+backgroundColor: 'rgba(79, 70, 229, 0.08)',
+fill: true,
+tension: 0.4,
+borderWidth: 3
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: { legend: { display: false } },
+scales: {
+x: { grid: { display: false }, ticks: { color: '#64748B' } },
+y: { grid: { color: '#E2E8F0' }, ticks: { color: '#64748B' } }
+}
+}
+});
+}
+</script>
+</body>
+</html>
